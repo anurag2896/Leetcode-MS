@@ -19,26 +19,18 @@ public:
         
         int start=0, end=0;
         string ans="";
-        // cout<<"printing till here 1 "<<endl;
-        while(end<n) {
-            if(!check(ref, m)) {
-                m[s[end]]++;
-                end++;
-            } else {
-                if(ans=="" || end-start < ans.size())
-                    ans = s.substr(start, end-start);
+        int minLen = n;
+        for(end=0; end<n; end++) {
+            m[s[end]]++;
+            while(check(ref, m)) {
+                int range = end-start+1;
+                if(minLen >= range) {
+                    minLen = min(minLen, range);
+                    ans = s.substr(start, range);
+                }
                 m[s[start]]--;
                 start++;
             }
-        }
-        
-        // cout<<"printing till here "<<endl;
-        
-        while(start<end && check(ref, m)) {
-            if(ans=="" || end-start < ans.size())
-                ans = s.substr(start, end-start);
-            m[s[start]]--;
-            start++;
         }
         
         return ans;
