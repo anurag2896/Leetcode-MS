@@ -26,7 +26,7 @@ public:
         ListNode* temp = first->next;
         // cout<<first->val<<endl;
         first->next = first->next->next;
-        // free(temp);
+        delete temp;
         
         return head;
     }
