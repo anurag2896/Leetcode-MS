@@ -1,19 +1,15 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        int maxcount=0, n=s.size(), maxlen=0;
-        vector<int> m(26, 0);
-        int start=0;
+        vector<int> m(128, 0);
+        int n=s.size(), left=0, maxlen=0, maxcount=0;   //checks max consectuive char count
         for(int i=0; i<n; i++) {
-            m[s[i]-'A']++;
-            maxcount = max(maxcount, m[s[i]-'A']);
-            
-            if(i-start+1-maxcount<=k) {
-                maxlen = max(maxlen, i-start+1);
-            } else {
-                m[s[start]-'A']--;
-                start++;
+            m[s[i]]++;
+            maxcount = max(maxcount, m[s[i]]);
+            while(i+1-left > maxcount + k) {
+                m[s[left++]]--;
             }
+            maxlen = max(maxlen, i+1-left);
         }
         return maxlen;
     }
