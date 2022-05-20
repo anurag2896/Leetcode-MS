@@ -18,19 +18,23 @@ public:
         
         for(int i=0; i<np; i++) {
             mp[p[i]]++;
-            ms[s[i]]++;
+            // ms[s[i]]++;
         }
         
-        for(int i=np; i<ns; i++) {
+        for(int i=0; i<ns; i++) {
+            ms[s[i]]++;
+            if(i>=np)
+                ms[s[left++]]--;
+            
             if(mp[s[left]]==ms[s[left]] && helper(mp, ms)) {
                 ans.push_back(left);
             }
-            ms[s[i]]++;
-            ms[s[left++]]--;
+            
+            
         }
         
-        if(helper(mp, ms))
-            ans.push_back(left);
+        // if(helper(mp, ms))
+        //     ans.push_back(left);
         
         return ans;
     }
