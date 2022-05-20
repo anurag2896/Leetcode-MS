@@ -1,7 +1,7 @@
 class Solution {
 public:
-    bool check(vector<int> ref, vector<int> m) {
-        for(int i=0; i<26; i++) {
+    bool helper(vector<int> ref, vector<int> m) {
+        for(int i=0; i<128; i++) {
             if(ref[i]!=m[i])
                 return false;
         }
@@ -9,32 +9,28 @@ public:
     }
     
     bool checkInclusion(string s1, string s2) {
-        vector<int> ref(26, 0), m(26, 0);
-        int n=s1.size(), n2=s2.size();
+        vector<int> ref(128, 0), m(128, 0);
+        int n1=s1.size(), n2=s2.size();
         
-        if(n>n2)
+        if(n1>n2)
             return false;
-
-        int start=0, end=0;
-        for(end=0; end<n; end++) {
-            ref[s1[end]-'a']++;
-            m[s2[end]-'a']++;
+        
+        for(int i=0; i<n1; i++) {
+            ref[s1[i]]++;
+            m[s2[i]]++;
         }
         
-        while(end<n2) {
-            if(ref[s2[start]-'a']==m[s2[start]-'a'] && check(ref, m)) {
+        int left=0;
+        for(int i=n1; i<n2; i++) {
+            if(m[s2[left]]==ref[s2[left]] && helper(ref, m)) {
                 return true;
             } else {
-                m[s2[start]-'a']--;
-                start++;
-                m[s2[end]-'a']++;
-                end++;
+                m[s2[left++]]--;
             }
+            m[s2[i]]++;
         }
-        
-        if(check(ref, m))
+        if(helper(ref, m))
             return true;
         return false;
-        
     }
 };
