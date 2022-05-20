@@ -1,35 +1,36 @@
 class Solution {
 public:
-    bool check(vector<int> ref, vector<int> m) {
+    bool helper(vector<int> smap, vector<int> tmap) {
         for(int i=0; i<128; i++) {
-            if(m[i]<ref[i])
+            if(smap[i]<tmap[i])
                 return false;
         }
         return true;
     }
     
     string minWindow(string s, string t) {
-        vector<int> ref(128, 0), m(128, 0);
-        int n=s.size(), ts=t.size();
-        if(ts>n)
-            return "";
-        
-        for(auto c:t)
-            ref[c]++;
-        
-        int start=0, end=0;
+        vector<int> tmap(128, 0), smap(128, 0);
+        int left=0, slen=s.size(), tlen=t.size();
+        int minlen = slen;
         string ans="";
-        int minLen = n;
-        for(end=0; end<n; end++) {
-            m[s[end]]++;
-            while(check(ref, m)) {
-                int range = end-start+1;
-                if(minLen >= range) {
-                    minLen = min(minLen, range);
-                    ans = s.substr(start, range);
+        
+        if(tlen>slen)
+            return ans;
+        
+        for(int i=0; i<tlen; i++) {
+            // smap[s[i]]++;
+            tmap[t[i]]++;
+        }
+        
+        
+        for(int i=0; i<slen; i++) {
+            smap[s[i]]++;
+            while(helper(smap, tmap)) {
+                if(minlen>=i-left+1) {
+                    minlen = i-left+1;
+                    ans=s.substr(left, i-left+1);
                 }
-                m[s[start]]--;
-                start++;
+                smap[s[left++]]--;
             }
         }
         
