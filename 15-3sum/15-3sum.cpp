@@ -12,8 +12,8 @@ public:
         for(int i=0; i<n-2; i++) {
             int l=i+1, r=n-1;
             while(l<r) {
-                int sum = -(nums[l] + nums[r]);
-                if(sum==nums[i]) {
+                int sum = (nums[l] + nums[r] + nums[i]);
+                if(0==sum) {
                     ans.push_back({nums[i], nums[l], nums[r]});
                     while(l<r && nums[l]==nums[l+1])
                         l++;
@@ -21,7 +21,7 @@ public:
                         r--;
                     l++;
                     r--;
-                } else if(sum>nums[i])
+                } else if(sum<0)
                     l++;
                 else
                     r--;
