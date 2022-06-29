@@ -1,14 +1,15 @@
 class Solution {
 public:
     
-    // static bool order( vector<int>& a, vector<int> const& b) {
-    //     return a[0]<b[0] || a[0]==b[0] && a[1]>b[1];
-    // }
-    
-    static bool comp(vector<int>& a, vector<int>& b){ //Comparator function for the logic of sort
+    static bool comp( vector<int>& a, vector<int> const& b) {
         if(a[0] == b[0]) return a[1] < b[1];
         return a[0] > b[0];
     }
+    
+    // static bool comp(vector<int>& a, vector<int>& b){ //Comparator function for the logic of sort
+        // if(a[0] == b[0]) return a[1] < b[1];
+        // return a[0] > b[0];
+    // }
     
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
         vector<vector<int>> ans;
