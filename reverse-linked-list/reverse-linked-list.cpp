@@ -11,12 +11,12 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* prev=NULL, *curr=head;
+        ListNode* prev=NULL, *curr=head, *hare;
         while(curr) {
-            ListNode* ahead = curr->next;
+            hare=curr->next;
             curr->next=prev;
             prev=curr;
-            curr=ahead;
+            curr=hare;
         }
         return prev;
     }
