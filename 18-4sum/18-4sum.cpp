@@ -12,8 +12,9 @@ public:
             for(int j=i+1; j<n-2; j++) {
                 int l=j+1, r=n-1;
                 while(l<r) {
-                    int temp=target-(nums[i] + nums[j]);
-                    int sum = nums[l] + nums[r];
+                    // cout<<LLONG_MIN<<endl;
+                    long long temp = ((long long)target-((long long)nums[i] + (long long)nums[j]));
+                    long long sum = (long long) ((long long)nums[l] + (long long)nums[r]);
                     if(sum==temp) {
                         ans.push_back({nums[i], nums[j], nums[l], nums[r]});
                         while(l<r && nums[l]==nums[l+1])
