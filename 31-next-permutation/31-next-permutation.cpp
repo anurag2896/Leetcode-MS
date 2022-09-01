@@ -4,15 +4,14 @@ public:
         int n=nums.size();
         if(n==1)
             return;
-        int index=-1, great_index;
-        for(int i=n-2; i>=0; i--) {
-            if(nums[i+1]>nums[i]) {
-                index=i;
+        int index, great_index;
+        for(int i=n-1; i>0; i--) {
+            if(nums[i]>nums[i-1]) {
+                index=i-1;
                 break;
             }
         }
         
-        // cout<<index;
         if(index==-1) {
             sort(nums.begin(), nums.end());
             return;
