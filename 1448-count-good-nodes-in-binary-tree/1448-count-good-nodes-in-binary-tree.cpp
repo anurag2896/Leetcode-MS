@@ -15,11 +15,11 @@ public:
         if(!root)
             return;
         if(root->val >= maxfar) {
-            // max=root->val;
+            maxfar=root->val;
             count++;
         }
-        helper(root->left, count, max(maxfar, root->val));
-        helper(root->right, count, max(maxfar, root->val));
+        helper(root->left, count, maxfar);
+        helper(root->right, count,maxfar);
     }
     
     int goodNodes(TreeNode* root) {
