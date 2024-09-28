@@ -10,7 +10,7 @@ public:
             m[c]++;
         }
 
-        int index=-1, min_len=s.size(), l=0;
+        int index=-1, min_len=1e9, l=0;
         for(int i=0; i<s.size(); i++) {
             if(m[s[i]] > 0) {
                 count--;
@@ -21,7 +21,7 @@ public:
                 m[s[l]]++;
                 if(m[s[l]] > 0) {
                     count++;
-                    if(i-l+1 <= min_len) {
+                    if(i-l+1 < min_len) {
                         index = l;
                         min_len = i-l+1;
                     }
