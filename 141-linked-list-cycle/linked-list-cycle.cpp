@@ -9,7 +9,8 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        ListNode* tort = head, *hare = head;
+        ListNode* tort = head, *hare=head;
+        
         while(hare && hare->next) {
             tort = tort->next;
             hare = hare->next->next;
@@ -18,6 +19,5 @@ public:
                 return true;
         }
         return false;
-
     }
 };
