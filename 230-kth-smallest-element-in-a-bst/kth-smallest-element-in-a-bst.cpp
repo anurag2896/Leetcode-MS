@@ -11,23 +11,25 @@
  */
 class Solution {
 
-    void dfs(TreeNode* root, int& k, int& ans) {
+    void helper(TreeNode* root, int& k, int& ans) {
         if(!root)
             return;
         
-        dfs(root->left, k, ans);
+        helper(root->left, k, ans);
+
         k--;
         if(k==0) {
-            ans=root->val;
+            ans = root->val;
             return;
         }
-        dfs(root->right, k, ans);
+
+        helper(root->right, k, ans);
     }
 
 public:
     int kthSmallest(TreeNode* root, int k) {
         int ans=0;
-        dfs(root, k, ans);
+        helper(root, k, ans);
         return ans;
     }
 };
