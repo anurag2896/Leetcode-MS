@@ -10,22 +10,19 @@
  * };
  */
 class Solution {
-
-    bool validate(TreeNode* range_min, TreeNode* root, TreeNode* range_max) {
+public:
+    bool helper(TreeNode* root, TreeNode* left, TreeNode* right) {
         if(!root)
             return true;
-
-        if((range_min && root->val <= range_min->val) || (range_max && root->val >= range_max->val))
-            return false;
         
-        return validate(range_min, root->left, root) && validate(root, root->right, range_max);
+        if((left && root->val <= left->val) || (right && root->val >= right->val)) {
+            return false;
+        }
+
+        return helper(root->left, left, root) && helper(root->right, root, right);
     }
 
-public:
     bool isValidBST(TreeNode* root) {
-        // if(!root)
-        //     return true;
-        
-        return validate(NULL, root, NULL);
+        return helper(root, NULL, NULL);
     }
 };
