@@ -1,30 +1,36 @@
 class Solution {
 public:
     string alienOrder(vector<string>& words) {
+        int n=words.size();
+        string ans="";
+
         unordered_map<char, vector<char>> adjList;
         unordered_map<char, int> indeg;
-
         for(auto word:words) {
-            for(auto ch:word) {
-                indeg[ch] = 0;
-                adjList[ch] = {};
+            for(auto c:word) {
+                if(adjList.find(c)==adjList.end()) {
+                    adjList[c] = {};
+                    indeg[c] = 0;
+                }
             }
         }
 
-        int total_words = words.size();
-        for(int i=0; i<total_words-1; i++) {
+        for(int i=0; i<n-1; i++) {
+            string curr = words[i];
+            string next = words[i+1];
+
+            int len = min(curr.size(), next.size());
             bool foundMismatch = false;
-            int min_len = min(words[i].size(), words[i+1].size());
-            for(int j=0; j<min_len; j++) {
-                if(words[i][j]!=words[i+1][j]) {
+            for(int j=0; j<len; j++) {
+                if(curr[j] != next[j]) {
                     foundMismatch = true;
-                    indeg[words[i+1][j]]++;
-                    adjList[words[i][j]].push_back(words[i+1][j]);
+                    adjList[curr[j]].push_back(next[j]);
+                    indeg[next[j]]++;
                     break;
                 }
             }
 
-            if(!foundMismatch && words[i].size() > words[i+1].size())
+            if(!foundMismatch && curr.size() > next.size())
                 return "";
         }
 
@@ -35,13 +41,12 @@ public:
             }
         }
 
-        string topo;
         while(!q.empty()) {
-            auto top = q.front();
+            char node = q.front();
+            ans+=node;
             q.pop();
-            topo+=top;
 
-            for(auto neighbor:adjList[top]) {
+            for(auto neighbor:adjList[node]) {
                 indeg[neighbor]--;
                 if(indeg[neighbor]==0) {
                     q.push(neighbor);
@@ -49,9 +54,9 @@ public:
             }
         }
 
-        if(topo.size()!=adjList.size())
+        if(indeg.size() != ans.size())
             return "";
         
-        return topo;
+        return ans;
     }
 };
