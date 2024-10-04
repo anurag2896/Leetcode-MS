@@ -1,8 +1,7 @@
 class LRUCache {
-
-    unordered_map<int, list<pair<int, int>>::iterator> m;   //key, iterator
+    unordered_map<int, list<pair<int, int>>::iterator> m;
     int size;
-    list<pair<int, int>> dll;   //key, value
+    list<pair<int, int>> dll;
 
 public:
     LRUCache(int capacity) {
@@ -13,11 +12,10 @@ public:
         auto found = m.find(key);
         if(found==m.end()) {
             return -1;
-        } else {
-            dll.splice(dll.begin(), dll, found->second);
-            m[key] = dll.begin();
-            return found->second->second;
         }
+        dll.splice(dll.begin(), dll, found->second);
+        m[key] = dll.begin();
+        return found->second->second;
     }
     
     void put(int key, int value) {
@@ -28,16 +26,14 @@ public:
             found->second->second = value;
             return;
         }
-
-        if(m.size()==size) {
-            auto keyToDel = dll.back().first;
-            m.erase(keyToDel);
+        if(dll.size() == size) {
+            int keyTobeDel = dll.back().first;
+            m.erase(keyTobeDel);
             dll.pop_back();
         }
 
         dll.push_front({key, value});
         m[key] = dll.begin();
-
     }
 };
 
