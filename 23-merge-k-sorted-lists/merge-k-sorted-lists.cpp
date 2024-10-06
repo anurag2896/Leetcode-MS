@@ -9,37 +9,37 @@
  * };
  */
 
-
-class comparator {
-public:
-    bool operator()(const ListNode* a, const ListNode* b) {
-        return a->val > b->val;
-    }
+class comp {
+    public:
+        bool operator()(const ListNode* a, const ListNode* b) {
+            return a->val > b->val;
+        }
 };
 
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<ListNode*, vector<ListNode*>, comparator> pq;
+        ListNode* newHead = new ListNode();
+        priority_queue<ListNode*, vector<ListNode*>, comp> pq;
 
+        if(lists.empty())
+            return NULL;
+        
         for(auto list:lists) {
             if(list)
                 pq.push(list);
         }
 
-        ListNode* newHead = new ListNode();
         ListNode* temp = newHead;
-
-
         while(!pq.empty()) {
-            auto top = pq.top();
+            auto node = pq.top();
             pq.pop();
-            temp->next = top;
+            temp->next = new ListNode(node->val);
             temp = temp->next;
+            node=node->next;
 
-            if(top->next) {
-                pq.push(top->next);
-            }
+            if(node)
+                pq.push(node);
         }
 
         return newHead->next;
