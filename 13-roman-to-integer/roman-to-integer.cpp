@@ -10,14 +10,18 @@ public:
         m['D'] = 500;
         m['M'] = 1000;
 
-        int value=m[s[s.size()-1]], n=s.size();
+        int n=s.size();
+        int ans = m[s[n-1]];
         for(int i=n-1; i>0; i--) {
-            char curr=s[i], prev=s[i-1];
-            if(m[curr]<=m[prev])
-                value+=m[prev];
-            else
-                value-=m[prev];
+            int curr = m[s[i]];
+            int next = m[s[i-1]];
+
+            if(next >= curr) {
+                ans+=next;
+            } else
+                ans-=next;
         }
-        return value;
+        return ans;
+
     }
 };
