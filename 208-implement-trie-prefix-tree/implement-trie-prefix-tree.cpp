@@ -1,64 +1,75 @@
-class Trie {
-
-    vector<Trie*> links;
+class Node {
+    vector<Node*>links;
     bool isEnd;
 
 public:
-    Trie() {
+    Node() {
         links.resize(26, NULL);
         isEnd = false;
     }
 
-    bool checkChar(char c) {
-        return links[c-'a']!=NULL;
+    Node* getNode(char ch) {
+        return links[ch-'a'];
     }
 
-    void putChar(char c, Trie* node) {
-        links[c-'a'] = node;
+    void putNode(char ch, Node* node) {
+        links[ch-'a'] = node;
     }
 
-    Trie* getChar(char c) {
-        return links[c-'a'];
-    }
-
-    void setEnd() {
-        isEnd = true;
+    bool containsNode(char ch) {
+        return links[ch-'a']!=NULL;
     }
 
     bool isEnding() {
         return isEnd;
     }
 
+    void setEnding() {
+        isEnd = true;
+    }
+};
+
+class Trie {
+
+    Node* root;
+
+public:
+    Trie() {
+        root = new Node();
+    }
     
     void insert(string word) {
-        Trie* node = this;
-        for(int i=0; i<word.size(); i++) {
-            if(!node->checkChar(word[i])) {
-                node->putChar(word[i], new Trie());
+        Node* node = root;
+        int n=word.size();
+        for(auto ch:word) {
+            if(!node->containsNode(ch)) {
+                node->putNode(ch, new Node());
             }
-            node = node->getChar(word[i]);
+            node = node->getNode(ch);
         }
-        node->setEnd();
+        node->setEnding();
     }
     
     bool search(string word) {
-        Trie* node = this;
-        for(int i=0; i<word.size(); i++) {
-            if(!node->checkChar(word[i])) {
+        Node* node = root;
+        int n=word.size();
+        for(auto ch:word) {
+            if(!node->containsNode(ch)) {
                 return false;
             }
-            node = node->getChar(word[i]);
+            node = node->getNode(ch);
         }
         return node->isEnding();
     }
     
-    bool startsWith(string word) {
-        Trie* node = this;
-        for(int i=0; i<word.size(); i++) {
-            if(!node->checkChar(word[i])) {
+    bool startsWith(string prefix) {
+        Node* node = root;
+        int n=prefix.size();
+        for(auto ch:prefix) {
+            if(!node->containsNode(ch)) {
                 return false;
             }
-            node = node->getChar(word[i]);
+            node = node->getNode(ch);
         }
         return true;
     }
