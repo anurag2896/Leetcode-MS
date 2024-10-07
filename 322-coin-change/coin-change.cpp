@@ -4,8 +4,8 @@ class Solution {
         if(index<0 || amount<0)
             return 1e9;
         
-        // if(amount==0)
-        //     return 0;
+        if(amount==0)
+            return 0;
         
         if(index==0) {
             if(amount%coins[index]==0)
