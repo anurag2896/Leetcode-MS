@@ -6,19 +6,19 @@ class KthLargest {
 public:
     KthLargest(int k, vector<int>& nums) {
         size = k;
+
         for(auto num:nums) {
             pq.push(num);
-            while(pq.size()>k) {
+            if(pq.size() > size)
                 pq.pop();
-            }
         }
     }
     
     int add(int val) {
         pq.push(val);
-        while(pq.size()>size) {
+        if(pq.size() > size)
             pq.pop();
-        }
+        
         return pq.top();
     }
 };
