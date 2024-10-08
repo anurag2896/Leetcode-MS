@@ -10,18 +10,22 @@
  * };
  */
 class Solution {
-public:
+
     bool helper(TreeNode* root, TreeNode* left, TreeNode* right) {
         if(!root)
             return true;
         
-        if((left && root->val <= left->val) || (right && root->val >= right->val)) {
+        if(left && root->val <= left->val)
             return false;
-        }
+        if(right && root->val >= right->val)
+            return false;
 
         return helper(root->left, left, root) && helper(root->right, root, right);
+
+
     }
 
+public:
     bool isValidBST(TreeNode* root) {
         return helper(root, NULL, NULL);
     }
