@@ -18,13 +18,13 @@ public:
             minHeap.push(top);
         }
 
-        if(maxHeap.size() > minHeap.size() + 1) {
+        while(maxHeap.size() > minHeap.size() + 1) {
             int top = maxHeap.top();
             maxHeap.pop();
             minHeap.push(top);
         }
 
-        if(minHeap.size() > maxHeap.size() + 1) {
+        while(minHeap.size() > maxHeap.size() + 1) {
             int top = minHeap.top();
             minHeap.pop();
             maxHeap.push(top);
