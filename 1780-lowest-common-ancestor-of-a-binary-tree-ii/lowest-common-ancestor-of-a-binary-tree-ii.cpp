@@ -13,7 +13,7 @@ class Solution {
         if(!root)
             return false;
         
-        if(root->val == p->val)
+        if(root == p)
             return true;
         
         return find(root->left, p) || find(root->right, p);
