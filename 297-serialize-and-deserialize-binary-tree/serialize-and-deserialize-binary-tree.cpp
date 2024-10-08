@@ -14,19 +14,21 @@ public:
     string serialize(TreeNode* root) {
         if(!root)
             return "#";
+        
         return to_string(root->val) + "," + serialize(root->left) + "," + serialize(root->right);
     }
 
     TreeNode* helper(stringstream& ss) {
         string temp;
         getline(ss, temp, ',');
+
         if(temp=="#")
             return NULL;
 
-        TreeNode* node = new TreeNode(stoi(temp));
-        node->left = helper(ss);
-        node->right = helper(ss);
-        return node;
+        TreeNode* root = new TreeNode(stoi(temp));
+        root->left = helper(ss); 
+        root->right = helper(ss); 
+        return root;
     }
 
     // Decodes your encoded data to tree.
